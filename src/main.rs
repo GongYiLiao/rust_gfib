@@ -14,14 +14,7 @@ impl<T> Gfib<T>
 where
     T: Clone,
 {
-    fn update(&mut self) {
-        let n = self.xs.len();
-        let m: usize = n - self.k;
-        let last_k_xs = self.xs.as_slice()[m..].to_vec();
-        let x_new = (self.gf)(&last_k_xs);
-        self.xs.push(x_new.clone());
-    }
-
+ 
     fn new(xs_init: Vec<T>, gf_tgt: Box<dyn Fn(&Vec<T>) -> T>) -> Self {
         let k_val = xs_init.len();
         if k_val == 0 {
@@ -33,6 +26,14 @@ where
                 xs: xs_init,
             }
         }
+    }
+
+    fn update(&mut self) {
+        let n = self.xs.len();
+        let m: usize = n - self.k;
+        let last_k_xs = self.xs.as_slice()[m..].to_vec();
+        let x_new = (self.gf)(&last_k_xs);
+        self.xs.push(x_new.clone());
     }
 
     fn take_n(&mut self, n: usize) -> Vec<T> {
